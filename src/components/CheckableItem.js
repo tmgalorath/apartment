@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import { COLOR } from 'react-native-material-ui';
 
 const CheckableItem = ({ title }) => {
   const [checked, setchecked] = useState(false);
-  console.log(checked)
   return (
     <View style={styles.row}>
       <CheckBox
@@ -17,6 +17,7 @@ const CheckableItem = ({ title }) => {
         checkedIcon="add"
         uncheckedIcon="clear"
         checkedColor="#00E9A1"
+        uncheckedColor={COLOR.pink500}
         checked={checked}
         onPress={() => setchecked(!checked)}
       />

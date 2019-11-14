@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
 import LottieAnimation from '../components/LottieAnimations';
 import Constants from 'expo-constants';
-import {Button} from 'react-native-material-ui'
 import { withTheme } from 'react-native-elements';
-const WelcomeScreen = ({navigation}) => {
-    
+import GreenButton from '../components/GreenButton';
+const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <LottieAnimation />
+      <LottieAnimation
+        source={require('../../assets/11045-buildin-a-web-page.json')}
+      />
       <Swiper>
         <View style={styles.infoContainer}>
           <Text style={styles.header}>New Roomates?</Text>
@@ -33,9 +34,7 @@ const WelcomeScreen = ({navigation}) => {
         </View>
       </Swiper>
       <View style={styles.buttonContainer}>
-        <Button style={{text: styles.text, container: styles.button}} raised primary text="Login" onPress={()=> {
-            navigation.navigate('Survey')
-        }}/>
+        <GreenButton title="Get Started" onSubmit={() => navigation.navigate('Survey')} />
       </View>
     </View>
   );
@@ -51,17 +50,17 @@ const styles = StyleSheet.create({
   infoContainer: {
     justifyContent: 'center',
     flex: 1,
-    marginBottom: 30,
+    marginBottom: 30
   },
   header: {
     fontSize: 26,
     fontWeight: 'bold',
-    textAlign: "center",
+    textAlign: 'center'
   },
   paragraph: {
-      fontSize: 16,
-      paddingHorizontal: 50,
-      textAlign: 'center'
+    fontSize: 16,
+    paddingHorizontal: 50,
+    textAlign: 'center'
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -71,11 +70,11 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   button: {
-      width: '40%',
+    width: '40%'
     //   height: 300,
   },
   text: {
-      fontSize: 20,
+    fontSize: 20
   },
 
   buttonStyle1: {
@@ -84,8 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 20,
     justifyContent: 'center',
-    maxWidth: '40%',
-
+    maxWidth: '40%'
   },
 
   text1: {

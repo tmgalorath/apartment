@@ -3,125 +3,162 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import CheckableItem from '../components/CheckableItem';
 import Constants from 'expo-constants';
 import Swiper from 'react-native-swiper';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { Button as MaterialButton } from 'react-native-material-ui';
 
-const SubmitButton = ({ onSubmit }) => {
-  return (
-    <AwesomeButtonBlue
-      type="primary"
-      onPress={() => onSubmit(false)}
-      textSize={18}
-      paddingHorizontal={42}
-    >
-      Submit
-    </AwesomeButtonBlue>
-  );
-};
+import LottieAnimation from '../components/LottieAnimations';
+import GreenButton from '../components/GreenButton';
 
-const KitchenSurvey = ({ onSubmit }) => {
+const SurveyFormat = ({ items, header, onSubmit }) => {
+  const formatItems = items.map((item, i) => {
+    if ((i + 1) % 2 == 0) {
+      return null;
+    }
+
+    if (i + 1 > items.length) {
+      return null;
+    }
+    return (
+      <View style={styles.row}>
+        <CheckableItem title={item.title} />
+        <CheckableItem title={items[i + 1].title} />
+      </View>
+    );
+  });
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Kitchen Survey</Text>
+        <Text style={styles.header}>{header}</Text>
         <SurveyHeader title="Mark the items that you will be bringing with you to the apartment" />
       </View>
-      <View style={styles.row}>
-        <CheckableItem title="Plates" />
-        <CheckableItem title="Bowls" />
-      </View>
-      <View style={styles.row}>
-        <CheckableItem title="Sliverware" />
-        <CheckableItem title="Blender" />
-      </View>
-      <View style={styles.row}>
-        <CheckableItem title="Pots/Pans" />
-        <CheckableItem title="Cutting Board" />
-      </View>
-      <View style={styles.row}>
-        <CheckableItem title="Cookie Tray" />
-        <CheckableItem title="Knives" />
-      </View>
-      <View style={styles.row}>
-        <CheckableItem title="Spatula" />
-        <CheckableItem title="Large Bowls" />
-      </View>
-      <View style={styles.row}>
-        <CheckableItem title="Cooking Grill" />
-        <CheckableItem title="Salt/Pepper" />
-      </View>
-      {/* </View> */}
+      {formatItems}
+
       <MaterialButton
-        style={{ text: { fontSize: 22 }, container: { width: '40%', marginVertical: 45 } }}
+        style={{
+          text: { fontSize: 22 },
+          container: { width: '40%', marginVertical: 45 }
+        }}
         raised
         accent
         text="Submit"
         onPress={() => {
-          console.log('submitted');
+          onSubmit(true);
         }}
       />
     </View>
   );
 };
+
+const KitchenSurvey = ({ onSubmit }) => {
+  const [finished, setfinished] = useState(false);
+  const header = 'Kitchen Survey';
+  const items = [
+    { title: 'Plates' },
+    { title: 'Bowls' },
+    { title: 'Silverware' },
+    { title: 'Blender' },
+    { title: 'Pots/Pans' },
+    { title: 'Cutting Board' },
+    { title: 'Cookie Tray' },
+    { title: 'Knives' },
+    { title: 'Spatula' },
+    { title: 'Large Bowls' },
+    { title: 'Cooking Grill' },
+    { title: 'Salt/Pepper' }
+  ];
+
+  if (finished) {
+    return (
+      <FinshedSurvey
+        header={header}
+        submit={setfinished}
+        lottieSource={require('../../assets/11282-bread-toaster.json')}
+      />
+    );
+  }
+
+  return <SurveyFormat items={items} onSubmit={setfinished} header={header} />;
+};
 const LivingRoomSurvey = ({ onSubmit }) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Living Room Survey</Text>
+  const [finished, setfinished] = useState(false);
+  const header = 'Living Room Survey';
 
-      <View style={styles.row}>
-        <CheckableItem title="BeanBag" />
-        <CheckableItem title="TV" />
-      </View>
-      <View style={styles.row}>
-        <CheckableItem title="WIFI Router" />
-        <CheckableItem title="Xbox" />
-      </View>
-      <View style={styles.row}>
-        <CheckableItem title="Apple TV" />
-        <CheckableItem title="Recliner" />
-      </View>
+  const items = [
+    { title: 'BeanBag Chair' },
+    { title: 'TV' },
+    { title: 'Rug' },
+    { title: 'Couch' },
+    { title: 'Sound System' },
+    { title: 'Table' },
+    { title: 'Apple TV' },
+    { title: 'ChromeCast' },
+    { title: 'TV Wall Mount' },
+    { title: 'TV Stand' },
+    { title: 'Coffee Table' },
+    { title: 'Chair' }
+  ];
 
-      <AwesomeButtonBlue
-        type="primary"
-        onPress={() => onSubmit(true)}
-        textSize={18}
-        paddingHorizontal={42}
-      >
-        Submit
-      </AwesomeButtonBlue>
-    </View>
-  );
+  if (finished) {
+    return (
+      <FinshedSurvey
+        header={header}
+        submit={setfinished}
+        lottieSource={require('../../assets/11247-catch-me-if-you-can.json')}
+      />
+    );
+  }
+
+  return <SurveyFormat items={items} onSubmit={setfinished} header={header} />;
 };
 
 const BedroomSurvey = ({ onSubmit }) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Bedroom Survey</Text>
+  const [finished, setfinished] = useState(false);
+  const header = 'Bedroom Survey';
+  const items = [
+    { title: 'TV' },
+    { title: 'Desk' },
+    { title: 'Chair' },
+    { title: 'TV Stand' },
+    { title: 'Xbox' },
+    { title: 'PS4' },
+    { title: 'Nintendo Switch' },
+    { title: 'Desktop Computer' },
+    { title: 'Apple TV' },
+    { title: 'ChromeCast' },
+    { title: 'Window Shades' },
+    { title: 'Wifi Router' }
+  ];
 
-      <View style={styles.row}>
-        <CheckableItem title="Plates" />
-        <CheckableItem title="Cups" />
-      </View>
-      <View style={styles.row}>
-        <CheckableItem title="Blender" />
-        <CheckableItem title="Toaster" />
-      </View>
-      <View style={styles.row}>
-        <CheckableItem title="Cookie Sheet" />
-        <CheckableItem title="Silverware" />
-      </View>
+  if (finished) {
+    return (
+      <FinshedSurvey
+        header={header}
+        submit={setfinished}
+        lottieSource={require('../../assets/3284-sky.json')}
+      />
+    );
+  }
 
-      <AwesomeButtonBlue type="primary" onPress={() => onSubmit(true)}>
-        Submit
-      </AwesomeButtonBlue>
-    </View>
-  );
+  return <SurveyFormat items={items} onSubmit={setfinished} header={header} />;
 };
 
-const FinshedSurvey = () => {
+const FinshedSurvey = ({ header, submit, lottieSource }) => {
   return (
     <View>
-      <Text>Finished the Survey</Text>
+      <View style={stylesF.wrapper}>
+        <View style={stylesF.header}>
+          <Text style={styles.header}>{header}</Text>
+          <Text style={stylesF.text}>
+            Congratulations! Now go vote so you know what to bring and we dont
+            end up with duplicates.
+          </Text>
+        </View>
+
+        <View style={stylesF.lottie}>
+          <LottieAnimation source={lottieSource} />
+        </View>
+
+          <GreenButton title={'Restart'} onSubmit={() => submit(false)} />
+      </View>
     </View>
   );
 };
@@ -180,6 +217,33 @@ const _SurveyScreen = () => {
   );
 };
 
+const stylesF = StyleSheet.create({
+  wrapper: {
+    height: '100%',
+    paddingTop: 30,
+    paddingBottom: 70,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  header: {
+    zIndex: 10
+  },
+
+
+  lottie: {
+    flex: 1,
+
+    paddingBottom: 100,
+  },
+
+  text: {
+    marginHorizontal: 10,
+    paddingTop: 10,
+    fontSize: 16,
+    textAlign: 'center'
+  }
+});
+
 const styles1 = StyleSheet.create({
   wrapper: {},
   slide1: {
@@ -211,18 +275,18 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 22,
     fontWeight: 'bold',
-    textAlign: "center",
+    textAlign: 'center'
   },
   container: {
     flex: 1,
     alignItems: 'center',
     paddingTop: Constants.statusBarHeight,
     backgroundColor: '#F6F6F7',
-    paddingBottom: 35,
+    paddingBottom: 35
   },
   headerContainer: {
-      justifyContent: 'space-around',
-      flex: 1,
+    justifyContent: 'space-around',
+    flex: 1
   },
   row: {
     flexDirection: 'row'

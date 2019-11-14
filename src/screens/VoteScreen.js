@@ -6,7 +6,7 @@ import Deck from '../components/Deck'
 const VoteScreen = () => {
     return (
         <View>
-            <Deck/>
+            
         </View>
     )
 }

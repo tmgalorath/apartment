@@ -3,10 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { COLOR } from 'react-native-material-ui';
 
+import { MaterialIcons } from '@expo/vector-icons' 
+
 const CheckableItem = ({ title }) => {
   const [checked, setchecked] = useState(false);
   return (
     <View style={styles.row}>
+      <MaterialIcons name="md-clear" size={32} color='red' />
       <CheckBox
         containerStyle={styles.checkbox}
         textStyle={styles.text}

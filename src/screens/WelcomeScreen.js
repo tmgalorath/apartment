@@ -34,7 +34,7 @@ const WelcomeScreen = ({ navigation }) => {
         </View>
       </Swiper>
       <View style={styles.buttonContainer}>
-        <GreenButton title="Get Started" onSubmit={() => navigation.navigate('Survey')} />
+        <GreenButton title="Get Started" onSubmit={() => navigation.navigate('SelectRoom')} />
       </View>
     </View>
   );

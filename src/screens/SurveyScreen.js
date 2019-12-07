@@ -7,6 +7,7 @@ import { Button as MaterialButton } from 'react-native-material-ui';
 
 import LottieAnimation from '../components/LottieAnimations';
 import GreenButton from '../components/GreenButton';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const SurveyFormat = ({ items, header, onSubmit }) => {
   const formatItems = items.map((item, i) => {
@@ -26,30 +27,33 @@ const SurveyFormat = ({ items, header, onSubmit }) => {
   });
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>{header}</Text>
-        <SurveyHeader title="Mark the items that you will be bringing with you to the apartment" />
-      </View>
-      {formatItems}
+      <ScrollView>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>{header}</Text>
+          <SurveyHeader title="Mark the items that you will be bringing with you to the apartment" />
+        </View>
+        {formatItems}
+        </ScrollView>
 
-      <MaterialButton
-        style={{
-          text: { fontSize: 22 },
-          container: { width: '40%', marginVertical: 45 }
-        }}
-        raised
-        accent
-        text="Submit"
-        onPress={() => {
-          onSubmit(true);
-        }}
-      />
+        <MaterialButton
+          style={{
+            text: { fontSize: 22 },
+            container: { width: '40%', marginVertical: 45 }
+          }}
+          raised
+          accent
+          text="Submit"
+          onPress={() => {
+            onSubmit(true);
+          }}
+        />
     </View>
   );
 };
 
 const KitchenSurvey = ({ onSubmit }) => {
   const [finished, setfinished] = useState(false);
+
   const header = 'Kitchen Survey';
   const items = [
     { title: 'Plates' },
@@ -157,7 +161,7 @@ const FinshedSurvey = ({ header, submit, lottieSource }) => {
           <LottieAnimation source={lottieSource} />
         </View>
 
-          <GreenButton title={'Restart'} onSubmit={() => submit(false)} />
+        <GreenButton title={'Change Responses'} onSubmit={() => submit(false)} />
       </View>
     </View>
   );
@@ -223,17 +227,16 @@ const stylesF = StyleSheet.create({
     paddingTop: 30,
     paddingBottom: 70,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-evenly'
   },
   header: {
     zIndex: 10
   },
 
-
   lottie: {
     flex: 1,
 
-    paddingBottom: 100,
+    paddingBottom: 100
   },
 
   text: {

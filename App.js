@@ -7,14 +7,38 @@ import {
 } from 'react-navigation';
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 import { createStackNavigator } from 'react-navigation-stack';
-import HomeScreen from './src/screens/HomeScreen';
-import VoteScreen from './src/screens/VoteScreen';
+import HomeScreen from './src/screens/MeScreen';
+import UsScreen from './src/screens/UsScreen';
+import SelectRoom from './src/screens/SelectRoom';
 import SurveyScreen from './src/screens/SurveyScreen';
 import { EvilIcons, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import { COLOR, ThemeContext, getTheme } from 'react-native-material-ui';
 import { Transition } from 'react-native-reanimated';
+import Bringing from './src/components/Bringing';
+import Wanting from './src/components/Wanting';
+import Personal from './src/components/Personal';
+
+import AsyncStorage from 'redux-persist/lib/storage';
+
+import { createStore } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import { Provider } from 'react-redux';
+import tutorialReducer from './src/reducers/tutorials';
+import { PersistGate } from 'redux-persist/integration/react';
+
+
+const persistConfig = {
+  key: 'primary',
+  storage: AsyncStorage
+};
+
+const persistedReducer = persistReducer(persistConfig, tutorialReducer);
+
+let store = createStore(persistedReducer);
+let persistor = persistStore(store);
+
 const uiTheme = {
   palette: {
     primaryColor: '#00E9A1',
@@ -36,18 +60,18 @@ const Header = ({ navigation }) => {
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: HomeScreen,
-    Vote: VoteScreen,
-    Survey: SurveyScreen
+    Us: UsScreen,
+    Me: HomeScreen,
+    Missing: SurveyScreen
   },
   {
-    initialRouteName: 'Survey',
+    initialRouteName: 'Us',
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
         let IconComponent = Ionicons;
         let iconName;
-        if (routeName === 'Home') {
+        if (routeName === 'Us') {
           // ${focused ? '' : '-outline'}
           iconName = `md-home`;
           // Sometimes we want to add badges to some icons.
@@ -55,9 +79,9 @@ const TabNavigator = createBottomTabNavigator(
           // IconComponent = HomeIconWithBadge;
         } else if (routeName === 'Settings') {
           iconName = `md-options`;
-        } else if (routeName === 'Survey') {
+        } else if (routeName === 'Me') {
           iconName = 'md-clipboard';
-        } else if (routeName === 'Vote') {
+        } else if (routeName === 'Missing') {
           iconName = 'md-checkmark';
         }
 
@@ -74,19 +98,23 @@ const TabNavigator = createBottomTabNavigator(
 
 const stackNavigator = createStackNavigator(
   {
-    mainFlow: TabNavigator
+    mainFlow: TabNavigator,
+    Bringing: Bringing,
+    Personal: Personal,
+    Wanting: Wanting
   },
   {
     initialRouteName: 'mainFlow',
-    defaultNavigationOptions: {
-      title: 'Apartments'
-    }
+    // defaultNavigationOptions: {
+    //   title: 'Apartments'
+    // }
   }
 );
 
 const switchNavigator = createAnimatedSwitchNavigator(
   {
     welcomeFlow: WelcomeScreen,
+    SelectRoom: SelectRoom,
     testFlow: stackNavigator
   },
   {
@@ -110,9 +138,13 @@ const switchNavigator = createAnimatedSwitchNavigator(
 const App = createAppContainer(switchNavigator);
 
 const wrap = () => (
-  <ThemeContext.Provider value={getTheme(uiTheme)}>
-    <App/>
-  </ThemeContext.Provider>
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <ThemeContext.Provider value={getTheme(uiTheme)}>
+        <App />
+      </ThemeContext.Provider>
+    </PersistGate>
+  </Provider>
 );
 
 export default wrap;

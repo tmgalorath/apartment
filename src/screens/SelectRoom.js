@@ -5,10 +5,10 @@ import { Card } from 'react-native-elements';
 const SelectRoom = ({navigation}) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text style={{ textAlign: 'center', fontSize: 22, marginTop: 20 }}>
-        My Registered Apartments
-      </Text>
       <ScrollView>
+        <Text style={{ textAlign: 'center', fontSize: 22, marginTop: 20 }}>
+          Current Apartment
+        </Text>
         <Room
           navigation={navigation}
           complexName="Raintree"
@@ -17,6 +17,10 @@ const SelectRoom = ({navigation}) => {
           date="August 2019 - April 2020"
           color="purple"
         />
+        <View style={{borderColor: "#ededed", borderBottomWidth: 2, flex: 1, marginTop: 15}}></View>
+        <Text style={{ textAlign: 'center', fontSize: 22, marginTop: 20 }}>
+          Previous Apartments
+        </Text>
         <Room
           navigation={navigation}
           complexName="Heritage"
@@ -69,7 +73,7 @@ const Room = ({ complexName, roomNumber, address, date, color='blue', navigation
           }}
         >
           <View>
-            <Text style={{ fontWeight: 10, fontSize: 16 }}>{complexName}</Text>
+            <Text style={{ fontSize: 16 }}>{complexName}</Text>
             <Text style={{ fontSize: 12 }}>Apt # {roomNumber}</Text>
           </View>
           <View>

@@ -9,7 +9,7 @@ const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <LottieAnimation
-        source={require('../../assets/11045-buildin-a-web-page.json')}
+        source={require('../../assets/11282-bread-toaster.json')}
       />
       <Swiper>
         <View style={styles.infoContainer}>
@@ -21,15 +21,15 @@ const WelcomeScreen = ({ navigation }) => {
         <View style={styles.infoContainer}>
           <Text style={styles.header}>Get Organized</Text>
           <Text style={styles.paragraph}>
-            Fill out your room survey and coordinate what to bring to you new
+            Fill out what items you will be bringing and coordinate what to bring to your new
             home
           </Text>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.header}>Vote</Text>
+          <Text style={styles.header}>Avoid Conflict</Text>
           <Text style={styles.paragraph}>
             Keep it simple and avoid conflict. If two roomates are bringing the
-            same item vote on who's to keep.
+            same item talk it out.
           </Text>
         </View>
       </Swiper>

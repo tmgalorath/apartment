@@ -3,8 +3,7 @@ import { View, Text, Image } from 'react-native';
 import { Overlay, Avatar } from 'react-native-elements';
 import {Feather, MaterialIcons} from 'react-native-vector-icons'
 
-const RoomateModal = ({ roomateName, phone, email, school, onDismiss }) => {
-    const abraham = require('../../assets/Abraham.jpg')
+const RoomateModal = ({ roomateName, phone, email, school, onDismiss, avatar }) => {
     // const George = require('../../assets/George.jpg')
     // const John = require('../../assets/John.jpg')
     // const Thomas = require('../../assets/John.jpg')
@@ -36,7 +35,7 @@ const RoomateModal = ({ roomateName, phone, email, school, onDismiss }) => {
       ></View>
       <View style={{ alignItems: 'center' }}>
         <Avatar
-          source={abraham}
+          source={avatar}
           size="xlarge"
           rounded
         />
@@ -45,7 +44,6 @@ const RoomateModal = ({ roomateName, phone, email, school, onDismiss }) => {
         style={{
           textAlign: 'center',
           fontSize: 22,
-          fontWeight: 10,
           marginVertical: 10
         }}
       >
@@ -68,7 +66,7 @@ const RoomateModal = ({ roomateName, phone, email, school, onDismiss }) => {
 
       <View
         style={{
-          borderBottomColor: 'gray',
+          borderBottomColor: '#ededed',
           borderBottomWidth: 1,
           marginVertical: 15
         }}
@@ -90,7 +88,7 @@ const RoomateModal = ({ roomateName, phone, email, school, onDismiss }) => {
 
       <View
         style={{
-          borderBottomColor: 'gray',
+          borderBottomColor: '#ededed',
           borderBottomWidth: 1,
           marginVertical: 15
         }}

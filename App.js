@@ -28,7 +28,6 @@ import { Provider } from 'react-redux';
 import tutorialReducer from './src/reducers/tutorials';
 import { PersistGate } from 'redux-persist/integration/react';
 
-
 const persistConfig = {
   key: 'primary',
   storage: AsyncStorage
@@ -62,7 +61,6 @@ const TabNavigator = createBottomTabNavigator(
   {
     Us: UsScreen,
     Me: HomeScreen,
-    Missing: SurveyScreen
   },
   {
     initialRouteName: 'Us',
@@ -105,9 +103,9 @@ const stackNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'mainFlow',
-    // defaultNavigationOptions: {
-    //   title: 'Apartments'
-    // }
+    defaultNavigationOptions: {
+      header: null
+    }
   }
 );
 
@@ -137,14 +135,28 @@ const switchNavigator = createAnimatedSwitchNavigator(
 
 const App = createAppContainer(switchNavigator);
 
-const wrap = () => (
-  <Provider store={store}>
-    <PersistGate persistor={persistor}>
-      <ThemeContext.Provider value={getTheme(uiTheme)}>
-        <App />
-      </ThemeContext.Provider>
-    </PersistGate>
-  </Provider>
-);
+class Wrap extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <ThemeContext.Provider value={getTheme(uiTheme)}>
+            <App />
+          </ThemeContext.Provider>
+        </PersistGate>
+      </Provider>
+    );
+  }
+}
 
-export default wrap;
+// const wrap = () => (
+//   <Provider store={store}>
+//     <PersistGate persistor={persistor}>
+//       <ThemeContext.Provider value={getTheme(uiTheme)}>
+//         <App />
+//       </ThemeContext.Provider>
+//     </PersistGate>
+//   </Provider>
+// );
+
+export default Wrap;

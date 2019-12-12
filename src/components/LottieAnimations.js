@@ -37,7 +37,7 @@ export default class LottieAnimation extends React.Component {
             width: 200,
             height: 300,
           }}
-        //   loop={false}
+          loop={false}
           source={this.props.source}
           // OR find more Lottie files @ https://lottiefiles.com/featured
           // Just click the one you like, place that file in the 'assets' folder to the left, and replace the above 'require' statement

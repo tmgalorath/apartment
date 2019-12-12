@@ -59,7 +59,7 @@ export default class CameraExample extends React.Component {
               >
                 <TouchableOpacity
                   style={{
-                    flex: 0.1,
+                    flex: 1,
                     alignSelf: 'flex-end',
                     alignItems: 'center'
                   }}
@@ -75,7 +75,7 @@ export default class CameraExample extends React.Component {
                     }}
                   >
                     {' '}
-                    Flip{' '}
+                    Take Photo{' '}
                   </Text>
                 </TouchableOpacity>
               </View>

@@ -1,19 +1,20 @@
 import * as Haptics from 'expo-haptics';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FlatList,
   Text,
   TextInput,
   View,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  SafeAreaView
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Dropdown } from 'react-native-material-dropdown';
 import { Button } from 'react-native-paper';
 import { useDispatch, useStore } from 'react-redux';
-import { COMPLETE_TUTORIAL, BRING_ITEM } from '../actions/tutorials';
+import { COMPLETE_TUTORIAL, BRING_ITEM, UPDATE_ITEM } from '../actions/tutorials';
 import ItemCard from '../components/ItemCard';
 import CameraTest from '../components/CameraTest';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -33,19 +34,22 @@ const HomeScreen = ({ navigation }) => {
   const [bringing, setbringing] = useState('');
   const [tag, settag] = useState('Other');
   const [myItems, setMyItems] = useState([]);
-  const store = useStore();
+  const [photo, setPhoto] = useState(null);
 
   const dispatch = useDispatch();
 
   const returnHandler = () => {
     if (bringing === '') {
-      console.log('dismissing')
-      Keyboard.dismiss()
-      DismissKeyboard()
-      return
+      console.log('dismissing');
+      Keyboard.dismiss();
+      DismissKeyboard();
+      return;
     }
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    dispatch({ type: BRING_ITEM, data: { title: bringing, tag: tag } });
+    dispatch({
+      type: BRING_ITEM,
+      data: { title: bringing, tag: tag, photo: photo }
+    });
     setMyItems([
       ...myItems,
       { title: bringing, tag: tag, ownerName: 'Thomas Galorath' }
@@ -58,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
       return (
         <TouchableWithoutFeedback
           style={{
-            margin: 10
+            margin: 20
           }}
         >
           <View
@@ -66,9 +70,18 @@ const HomeScreen = ({ navigation }) => {
               flexDirection: 'row',
               alignItems: 'flex-start',
               justifyContent: 'space-evenly',
-              borderColor: 'black',
-              borderWidth: 1,
-              borderRadius: 5
+              // borderColor: 'black',
+              // borderWidth: 1,
+              borderRadius: 5,
+              backgroundColor: '#fff',
+              shadowColor: '#000',
+              shadowOpacity: 0.2,
+              shadowRadius: 4,
+              shadowOffset: { x: 1, y: 2 },
+              marginHorizontal: 10,
+              paddingHorizontal: 3,
+              paddingVertical: 5,
+              marginVertical: 20,
             }}
           >
             <TextInput
@@ -77,7 +90,7 @@ const HomeScreen = ({ navigation }) => {
                 fontSize: 16,
                 alignSelf: 'center',
                 paddingBottom: 5,
-                borderBottomColor: 'black',
+                borderBottomColor: '#dddddd',
                 borderBottomWidth: 1
               }}
               returnKeyType="done"
@@ -113,12 +126,11 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
         <Text
           style={{
             fontSize: 22,
-            fontWeight: 10,
             textAlign: 'center',
             paddingBottom: 10
           }}
@@ -130,11 +142,12 @@ const HomeScreen = ({ navigation }) => {
             textAlign: 'center',
             paddingBottom: 10,
             marginHorizontal: 20,
-            fontSize: 16
+            fontSize: 16,
+            paddingTop: 5,
           }}
         >
           Tell your roomates what items you will be bringing to your new
-          Apartment?
+          Apartment!
         </Text>
         {addButton()}
 
@@ -143,7 +156,11 @@ const HomeScreen = ({ navigation }) => {
           keyboardDismissMode="on-drag"
           data={myItems}
           renderItem={({ item }) => (
-            <ItemCard title={item.title} tagTitle={item.tag} />
+            <ItemCard
+              title={item.title}
+              tagTitle={item.tag}
+              ownerName="Thomas Galorath"
+            />
           )}
         />
         {/* put something in here like text box */}
@@ -151,7 +168,7 @@ const HomeScreen = ({ navigation }) => {
           <KeyboardSpacer />
         </TouchableOpacity>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
